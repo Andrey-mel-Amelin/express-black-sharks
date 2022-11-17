@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const NotFoundError = require('../errors/NotFoundError');
 
-// const allowedCors = require('../middlewares/allowedCors');
+const allowedCors = require('../middlewares/allowedCors');
 
-// router.use(allowedCors);
+router.use(allowedCors);
 
 router.use('/admin', require('./admin'));
 router.use('/products', require('./products'));

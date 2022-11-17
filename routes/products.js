@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const { validId } = require('../middlewares/joiValidation');
-const { getProduct, createProduct, deleteProduct } = require('../controllers/products');
+const { getProducts, createProduct, deleteProduct } = require('../controllers/products');
 const auth = require('../middlewares/auth');
 
-router.get('/', getProduct);
+router.get('/', getProducts);
 router.post('/', auth, createProduct);
 router.delete('/:productId', auth, validId('productId'), deleteProduct);
 

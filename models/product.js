@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    name: {
+    nameProduct: {
       type: String,
       minlength: 1,
       maxlength: 40,
@@ -24,10 +24,6 @@ const productSchema = new mongoose.Schema(
       maxlength: 40,
       required: true,
     },
-    count: {
-      type: String,
-      default: 1,
-    },
     price: {
       type: String,
       required: true,
@@ -35,6 +31,14 @@ const productSchema = new mongoose.Schema(
     totalPrice: {
       type: String,
       required: true,
+    },
+    image: {
+      dataImage: { type: Buffer, unique: true },
+      path: String,
+    },
+    count: {
+      type: String,
+      default: 1,
     },
     createdAt: {
       type: Date,

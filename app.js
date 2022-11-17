@@ -1,4 +1,5 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -8,7 +9,7 @@ const routes = require('./routes');
 const centralizedErrorHandler = require('./middlewares/centralizedErrorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/blacksharks' } = process.env;
+const { PORT = 3001, MONGO_URL = 'mongodb://127.0.0.1:27017/blacksharks' } = process.env;
 
 const app = express();
 
@@ -22,6 +23,7 @@ mongoose.connect(MONGO_URL, {
 
 app.use(requestLogger);
 
+app.use(fileUpload({}));
 app.use(routes);
 
 app.use(errorLogger);
