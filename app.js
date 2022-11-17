@@ -24,6 +24,7 @@ mongoose.connect(MONGO_URL, {
 app.use(requestLogger);
 
 app.use(fileUpload({}));
+app.use(express.static(`${__dirname}/uploads/products-image`));
 app.use(routes);
 
 app.use(errorLogger);
