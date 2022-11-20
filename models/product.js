@@ -25,19 +25,14 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     price: {
-      type: String,
-      required: true,
-    },
-    totalPrice: {
-      type: String,
+      type: Number,
       required: true,
     },
     image: {
-      dataImage: { type: Buffer, unique: true },
       path: String,
     },
-    count: {
-      type: String,
+    quantity: {
+      type: Number,
       default: 1,
     },
     createdAt: {
