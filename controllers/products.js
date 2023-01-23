@@ -17,7 +17,7 @@ module.exports.createProduct = (req, res, next) => {
     mainProduct,
     nameProduct,
     type,
-    about,
+    desc,
     price,
   } = req.body;
 
@@ -31,7 +31,7 @@ module.exports.createProduct = (req, res, next) => {
     mainProduct,
     nameProduct,
     type,
-    about,
+    desc,
     price,
     image: {
       path: `http://localhost:3001/image/${name}`,

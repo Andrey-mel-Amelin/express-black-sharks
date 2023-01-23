@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema(
       maxlength: 40,
       required: true,
     },
-    about: {
+    desc: {
       type: String,
       minlength: 1,
       maxlength: 40,
@@ -30,10 +30,6 @@ const productSchema = new mongoose.Schema(
     },
     image: {
       path: String,
-    },
-    quantity: {
-      type: Number,
-      default: 1,
     },
     createdAt: {
       type: Date,
