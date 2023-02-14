@@ -1,10 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const Product = require('../models/product');
-const { CAST_ERROR, VALIDATION_ERROR } = require('../constants');
+const { CAST_ERROR, VALIDATION_ERROR, backendUrl } = require('../constants');
 const BadReqError = require('../errors/BadReqError');
 const NotFoundError = require('../errors/NotFoundError');
-const DublicateKeyError = require('../errors/DublicateKeyError');
 
 module.exports.getProducts = (req, res, next) => {
   Product.find({})
@@ -31,7 +30,7 @@ module.exports.createProduct = (req, res, next) => {
     desc,
     price,
     image: {
-      path: `http://localhost:3001/image/${name}`,
+      path: `${backendUrl.deploy}/image/${name}`,
     },
   })
     .then((product) => {
