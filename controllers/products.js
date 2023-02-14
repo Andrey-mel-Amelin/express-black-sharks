@@ -23,9 +23,6 @@ module.exports.createProduct = (req, res, next) => {
 
   const { name, data } = req.files.image;
   const pathImage = path.join(`${__dirname}/../uploads/products-image/${name}`);
-  if (fs.existsSync(pathImage)) {
-    return next(new DublicateKeyError('Изображение уже есть на сервере.'));
-  }
 
   return Product.create({
     mainProduct,
