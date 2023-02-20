@@ -1,7 +1,24 @@
 const jwt = require('jsonwebtoken');
+const { CAST_ERROR } = require('../constants');
+const BadReqError = require('../errors/BadReqError');
+const NotFoundError = require('../errors/NotFoundError');
 const Admin = require('../models/admin');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
+
+module.exports.getAdmin = (req, res, next) => {
+  Admin.findById(req.user._id)
+    .orFail(new NotFoundError('Администратор не найден.'))
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      if (err.name === CAST_ERROR) {
+        return next(new BadReqError('Передан некорректный _id для поиска администратора.'));
+      }
+      return next(err);
+    });
+};
 
 module.exports.login = (req, res, next) => {
   const { name, password } = req.body;
