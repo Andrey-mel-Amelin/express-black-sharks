@@ -39,10 +39,5 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  const { jwtToken } = req.cookies;
-
-  if (!jwtToken) {
-    return res.send({ message: 'Нет авторизованных админов.' });
-  }
-  return res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true }).send({ message: 'Админ вышел.' });
+  res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true }).send({ message: 'Админ вышел.' });
 };
