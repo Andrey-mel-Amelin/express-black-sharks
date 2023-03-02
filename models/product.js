@@ -30,6 +30,7 @@ const productSchema = new mongoose.Schema(
     },
     image: {
       path: String,
+      pathForLocal: String,
     },
     createdAt: {
       type: Date,

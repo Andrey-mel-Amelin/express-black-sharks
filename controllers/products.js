@@ -5,9 +5,11 @@ const { CAST_ERROR, VALIDATION_ERROR, backendUrl } = require('../constants');
 const BadReqError = require('../errors/BadReqError');
 const NotFoundError = require('../errors/NotFoundError');
 
+const { NODE_ENV } = process.env;
+
 module.exports.getProducts = (req, res, next) => {
   Product.find({})
-    .then((product) => res.send(product))
+    .then((product) => res.send(product.reverse()))
     .catch(next);
 };
 
@@ -30,7 +32,8 @@ module.exports.createProduct = (req, res, next) => {
     desc,
     price,
     image: {
-      path: `${backendUrl.deploy}/image/${name}`,
+      path: `${NODE_ENV === 'production' ? backendUrl.deploy : backendUrl.local}/uploads/products-image/${name}`,
+      pathForLocal: pathImage,
     },
   })
     .then((product) => {
@@ -47,13 +50,11 @@ module.exports.createProduct = (req, res, next) => {
 };
 
 module.exports.deleteProduct = (req, res, next) => {
-  Product.findById(req.params.productId)
+  Product.findByIdAndDelete(req.params.productId.toString())
     .orFail(new NotFoundError('Продукт не найден'))
     .then((product) => {
-      Product.findByIdAndDelete(product._id.toString()).then(() => {
-        fs.rmSync(product.image.path);
-        res.send({ message: 'Продукт успешно удален.' });
-      });
+      fs.rmSync(NODE_ENV === 'production' ? product.image.path : product.image.pathForLocal);
+      res.send({ message: 'Продукт успешно удален.' });
     })
     .catch((err) => {
       if (err.name === CAST_ERROR) {
