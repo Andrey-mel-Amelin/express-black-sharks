@@ -33,11 +33,11 @@ module.exports.createProduct = (req, res, next) => {
     price,
     image: {
       path: `${NODE_ENV === 'production' ? backendUrl.deploy : backendUrl.local}/uploads/products-image/${name}`,
-      pathForLocal: pathImage,
+      pathForDelete: pathImage,
     },
   })
     .then((product) => {
-      fs.writeFileSync(pathImage, data);
+      fs.appendFileSync(pathImage, data);
       res.send(product);
     })
     .catch((err) => {
@@ -53,7 +53,7 @@ module.exports.deleteProduct = (req, res, next) => {
   Product.findByIdAndDelete(req.params.productId.toString())
     .orFail(new NotFoundError('Продукт не найден'))
     .then((product) => {
-      fs.rmSync(NODE_ENV === 'production' ? product.image.path : product.image.pathForLocal);
+      fs.rmSync(product.image.pathForDelete);
       res.send({ message: 'Продукт успешно удален.' });
     })
     .catch((err) => {
